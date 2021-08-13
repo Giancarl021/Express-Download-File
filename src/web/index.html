@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suba seus arquivos</title>
+    <style>
+        *,
+        ::before,
+        ::after {
+            box-sizing: border-box;
+            font-family: 'Consolas', monospace !important;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        input#files {
+            display: none;
+        }
+
+        label[for="files"] img {
+            width: 200px;
+            height: auto;
+        }
+
+        button#submit {
+            border: none;
+            outline: none;
+            font-size: 3rem;
+            background-color: #2e2e2e;
+            padding: 5px 15px;
+            border-radius: 10px;
+            color: white;
+            display: none;
+        }
+
+        #message {
+            position: absolute;
+            top: 25px;
+            margin: auto;
+            user-select: none;
+
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.querySelector('input#files');
+            const btn = document.querySelector('button#submit');
+            const message = document.querySelector('#message');
+
+            const { upload } = getQueryParams();
+
+            input.onchange = () => {
+                if (input.files.length > 0) {
+                    btn.style.display = 'block';
+                } else {
+                    btn.style.display = 'none';
+                }
+            }
+
+            if (upload === 'true') {
+                message.style.display = 'block';
+                message.innerText = 'Arquivo carregado com sucesso!';
+
+            } else if (upload === 'false') {
+                message.style.display = 'block';
+                message.innerText = 'Arquivo não foi carregado!';
+            }
+        });
+
+        function getQueryParams() {
+            const urlSearchParams = new URLSearchParams(window.location.search);
+            return Object.fromEntries(urlSearchParams.entries());
+        }
+    </script>
+</head>
+
+<body>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="files">
+            <img src="/assets/upload.svg" alt="Clique aqui para carregar seus arquivos" />
+        </label>
+        <input id="files" type="file" name="files" multiple="true" />
+        <button type="submit" id="submit">
+            Enviar
+        </button>
+    </form>
+    <div id="message">
+    </div>
+</body>
+
+</html>
