@@ -13,5 +13,5 @@ module.exports = function () {
             fs.mkdirSync(dir, { recursive: true })
         });
 
-    global.outputDir = process.argv[2] || process.env.OUTPUT_DIR || locate('data');
+    global.outputDir = locate(process.argv[2] || process.env.OUTPUT_DIR || 'data');
 }
