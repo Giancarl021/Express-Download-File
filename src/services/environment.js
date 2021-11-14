@@ -1,3 +1,4 @@
+const { argv: args } = require('yargs');
 const dotenv = require('dotenv');
 const fs = require('fs');
 const locate = require('@giancarl021/locate');
@@ -13,5 +14,6 @@ module.exports = function () {
             fs.mkdirSync(dir, { recursive: true })
         });
 
-    global.outputDir = locate(process.argv[2] || process.env.OUTPUT_DIR || 'data');
+    global.outputDir = locate(args._.join(' ') || process.env.OUTPUT_DIR || 'data');
+    global.port = args.p || args.port || process.env.PORT || 80;
 }
