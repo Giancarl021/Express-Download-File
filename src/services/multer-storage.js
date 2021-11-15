@@ -5,9 +5,10 @@ module.exports = multer.diskStorage({
         cb(null, global.outputDir)
     },
     filename: function (_, file, cb) {
-        const [ extension, ...reversedName ] = file.originalname.split('.').reverse();
+        const originalName = file.originalname.split('.');
 
-        const name = reversedName.reverse().join('.');
+        const extension = originalName.pop();
+        const name = originalName.join('.');
 
         cb(null, `${name}-${Date.now()}.${extension}`);
     },
